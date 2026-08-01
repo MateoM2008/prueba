@@ -1,58 +1,88 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Dashboard de Torneos Gamer</title>
-    <script src="dashboard.js"></script>
-    <script src="utilitarios.js"></script>
+
     <link rel="stylesheet" href="deshboar.css">
 </head>
 
 <body>
+
     <!-- Encabezado Principal -->
     <header>
-        <!-- Actividad 1. Crear el título "Dashboard de Torneos Gamer" -->
         <h1>Dashboard de Torneos Gamer</h1>
     </header>
-    <!-- Contenido Principal -->
 
+    <!-- Contenido Principal -->
     <main>
-        <!-- Actividad 1. Formulario de Registro (15 puntos) -->
-        <input type="text " id="txtNombreTorneo" placeholder="Nombre">
-        <input type="text " id="txtCategoria" placeholder="Categoria" list="Categoria">
-        <input type="text " id="txtPartisipartes" placeholder="Partisipastes">
-        <input type="text " id="txtValoInscripcion" placeholder="valor Inscripcion">
-        <input type="text " id="txtEmail" placeholder="Email">
+
+        <div class="campo-formulario">
+            <input type="text" id="txtNombreTorneo" placeholder="Nombre">
+            <small id="errorNombre" class="mensaje-error"></small>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="text" id="txtCategoria" placeholder="Categoria" list="Categoria">
+            <small id="errorCategoria" class="mensaje-error"></small>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="text" id="txtPartisipartes" placeholder="Partisipantes">
+            <small id="errorParticipantes" class="mensaje-error"></small>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="text" id="txtValoInscripcion" placeholder="valor Inscripcion">
+            <small id="errorInscripcion" class="mensaje-error"></small>
+        </div>
+
+        <div class="campo-formulario">
+            <input type="text" id="txtEmail" placeholder="Email">
+            <small id="errorEmail" class="mensaje-error"></small>
+        </div>
+
+        <!-- Categorías disponibles -->
         <datalist id="Categoria">
             <option value="Lucha">
             <option value="Estrategia">
             <option value="Arcade">
             <option value="Deportes">
-            <option value="Aventura"></option>
+            <option value="Aventura">
         </datalist>
+
         <p>
-            <button onclick="registrarTorneo();">Registrar torneo</button>
+            <button onclick="registrarTorneo();">
+                Registrar torneo
+            </button>
         </p>
-        <!-- Actividad 2. Crear la tabla (10 puntos) -->
+
+        <!-- Tabla -->
         <table>
             <tr>
                 <th>Nombre</th>
                 <th>Categoria</th>
-                <th>Partisipastes</th>
+                <th>Partisipantes</th>
                 <th>Valor inscripcion</th>
                 <th>Email</th>
-                <th>Recuadacion estimada</th>
+                <th>Recaudacion estimada</th>
+                <th>Acciones</th>
             </tr>
+
             <tbody id="conTabla">
                 <tr>
-
                 </tr>
             </tbody>
         </table>
+
     </main>
-    <!-- Enlace al archivo de JavaScript de la evaluación -->
+
+    <script src="utilitarios.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 
 </html>

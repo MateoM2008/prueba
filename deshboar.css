@@ -43,9 +43,14 @@ main{
 FORMULARIO
 =============================*/
 
+.campo-formulario {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
 input{
     width:100%;
-    margin-bottom:18px;
+    margin-bottom:6px;
     padding:14px 16px;
     border:none;
     border-radius:12px;
@@ -163,4 +168,15 @@ RESPONSIVE
         padding:10px;
         font-size:14px;
     }
+}
+
+.mensaje-error {
+    display: block;
+    min-height: 18px;
+    color: #ff3b30;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+    text-align: left;
+    letter-spacing: 0.2px;
 }
