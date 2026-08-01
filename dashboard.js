@@ -12,38 +12,7 @@
 let torneos = [];
 
 //Tarjetas Dimanicas
-function generarTarjetas(torneos) {
 
-    let lista = listaTorneos || torneos;
-    let contenidoTarjetas = "";
-
-    for (let i = 0; i < lista.length; i++) {
-
-        let torneoR = lista[i];
-
-        // Índice real dentro del arreglo "torneos" (importante cuando hay
-        // una búsqueda activa: "lista" puede ser un arreglo filtrado)
-        let indiceReal = torneos.indexOf(torneoR);
-
-        contenidoTarjetas +=
-            "<div class='tarjeta-torneo'>" +
-            "<span class='tarjeta-categoria'>" + torneoR.categoria + "</span>" +
-            "<h3 class='tarjeta-nombre'>" + torneoR.nombre + "</h3>" +
-            "<p class='tarjeta-dato'>Participantes: <strong>" + torneoR.partisipartes + "</strong></p>" +
-            "<p class='tarjeta-dato'>Inscripción: <strong>$" + torneoR.inscripcion + "</strong></p>" +
-            "<p class='tarjeta-recaudacion'>Recaudación: $" + torneoR.Recaudacion + "</p>" +
-            "<button type='button' class='btn-ver' onclick='verTorneo(" + indiceReal + ")'>VER</button>" +
-            "</div>";
-
-    }
-
-    if (lista.length === 0) {
-        contenidoTarjetas = "<p class='tarjetas-vacio'>No hay torneos para mostrar en tarjetas.</p>";
-    }
-
-    document.getElementById("contenedorTarjetas").innerHTML = contenidoTarjetas;
-
-}
 
 /**
  * Actividad 4. Registrar y validar un torneo (30 puntos)
@@ -173,7 +142,7 @@ function mostrarTorneos() {
             "<td>" + torneoR.Recaudacion + "</td>" +
             "<td><button onclick=\"editar('" + torneoR.nombre + "')\">Editar</button>" +
             "<button onclick=\"eliminarTorneo()\">eliminar</button>" +
-            "<button onclick=\"generarTarjetas('" + indiceReal + "')\">ver</button></td>"
+            "<button onclick=\"mostrasTargeta('" + torneoR.nombre + "')\">ver</button></td>"
         "</tr>";
 
     }
@@ -185,6 +154,8 @@ function mostrarTorneos() {
     // 29. Insertar el HTML final en el cuerpo de la tabla
     // usando innerHTML
     cmpTabla.innerHTML = contenidoTabla;
+
+    actualizarEstadisticas();
 
 }
 
@@ -267,33 +238,31 @@ function buscarTorneos() {
 
 
 }
-
-function verTorneo(indice) {
-
-    let torneoR = torneos[indice];
-    if (!torneoR) return;
-
-    let detalle =
-        "<h3>" + torneoR.nombre + "</h3>" +
-        "<p><strong>Categoría:</strong> " + torneoR.categoria + "</p>" +
-        "<p><strong>Participantes:</strong> " + torneoR.partisipartes + "</p>" +
-        "<p><strong>Valor de inscripción:</strong> $" + torneoR.inscripcion + "</p>" +
-        "<p><strong>Email del organizador:</strong> " + torneoR.email + "</p>" +
-        "<p><strong>Recaudación estimada:</strong> $" + torneoR.Recaudacion + "</p>";
-
-    document.getElementById("modalContenido").innerHTML = detalle;
-    document.getElementById("modalTorneo").classList.add("activo");
-
+function mostrasTargeta(nombre) {
+    let existe = buscarTorneo(nombre)
+    if (existe != null) {
+        alert("Nombre: " + existe.nombre + "\n Categoria: " + existe.categoria + "\n Partisipasttes: " + existe.partisipartes + "\n Valor Inscripcion: " + existe.inscripcion + "\n Email: " + existe.email + "\n Recaudación estimada: " + existe.Recaudacion)
+    }
 }
 
-/**
- * Cierra la ventana modal.
- */
-function cerrarModal() {
-    document.getElementById("modalTorneo").classList.remove("activo");
-}
 
-/**
- * Actividad 6. Limpiar el formulario (5 puntos)
- * 30. Crear la función limpiarFormulario().
- */
+let totalParticipantes=null;
+let totalRecaudacion=null;
+function actualizarEstadisticas() 
+{
+let cmpCuerpoTabla=document.getElementById("cuerpoTabla");
+let codigoActualizar="";
+totalParticipantes=0;
+totalRecaudacion=0;
+    let numeroTorneos=torneos.length;
+    for (let index = 0; index < torneos.length; index++) 
+        {
+        let arregloARecorrer=torneos[index];
+        totalParticipantes=totalParticipantes+arregloARecorrer.partisipartes;
+        totalRecaudacion=totalRecaudacion+arregloARecorrer.Recaudacion;
+        }
+        codigoActualizar+='<tr><td>'+
+        totalParticipantes+'</td><td>'+
+        totalRecaudacion+'</td></tr></tbody>';
+        cmpCuerpoTabla.innerHTML=codigoActualizar;
+}
