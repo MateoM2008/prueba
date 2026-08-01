@@ -180,3 +180,143 @@ RESPONSIVE
     text-align: left;
     letter-spacing: 0.2px;
 }
+
+
+
+
+
+.tarjetas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.tarjeta-torneo {
+    background: white;
+    color: #333;
+    border-radius: 15px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+    transition: .3s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.tarjeta-torneo:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .35);
+    background: #dbeafe;
+}
+
+.tarjeta-categoria {
+    align-self: flex-start;
+    background: #1d4ed8;
+    color: white;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.tarjeta-nombre {
+    font-size: 18px;
+    margin: 4px 0;
+}
+
+.tarjeta-dato {
+    font-size: 14px;
+    color: #444;
+}
+
+.tarjeta-recaudacion {
+    font-weight: bold;
+    color: #16a34a;
+    margin-top: 6px;
+}
+
+.btn-ver {
+    align-self: flex-start;
+    margin-top: 10px;
+    background: linear-gradient(45deg, #2563eb, #1d4ed8);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-ver:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #1d4ed8, #1e3a8a);
+}
+
+.tarjetas-vacio {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .6);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal-overlay.activo {
+    display: flex;
+}
+
+.modal-caja {
+    background: white;
+    color: #333;
+    border-radius: 18px;
+    padding: 30px;
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .4);
+}
+
+.modal-cerrar {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    line-height: 1;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+    box-shadow: none;
+}
+
+.modal-cerrar:hover {
+    color: #333;
+    transform: none;
+    background: none;
+}
+
+.modal-caja h3 {
+    margin-bottom: 14px;
+    color: #1d4ed8;
+}
+
+.modal-caja p {
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.modal-caja p strong {
+    color: #111;
+}

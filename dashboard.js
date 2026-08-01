@@ -12,7 +12,7 @@
 let torneos = [];
 
 //Tarjetas Dimanicas
-function generarTarjetas(listaTorneos) {
+function generarTarjetas(torneos) {
 
     let lista = listaTorneos || torneos;
     let contenidoTarjetas = "";
@@ -21,6 +21,10 @@ function generarTarjetas(listaTorneos) {
 
         let torneoR = lista[i];
 
+        // Índice real dentro del arreglo "torneos" (importante cuando hay
+        // una búsqueda activa: "lista" puede ser un arreglo filtrado)
+        let indiceReal = torneos.indexOf(torneoR);
+
         contenidoTarjetas +=
             "<div class='tarjeta-torneo'>" +
             "<span class='tarjeta-categoria'>" + torneoR.categoria + "</span>" +
@@ -28,6 +32,7 @@ function generarTarjetas(listaTorneos) {
             "<p class='tarjeta-dato'>Participantes: <strong>" + torneoR.partisipartes + "</strong></p>" +
             "<p class='tarjeta-dato'>Inscripción: <strong>$" + torneoR.inscripcion + "</strong></p>" +
             "<p class='tarjeta-recaudacion'>Recaudación: $" + torneoR.Recaudacion + "</p>" +
+            "<button type='button' class='btn-ver' onclick='verTorneo(" + indiceReal + ")'>VER</button>" +
             "</div>";
 
     }
@@ -40,36 +45,6 @@ function generarTarjetas(listaTorneos) {
 
 }
 
-//Buscar Torneo
-function buscarTorneos() {
-
-    let texto = document.getElementById("cajaBusqueda").value.trim().toLowerCase();
-
-    if (texto === "") {
-        // Al vaciar la búsqueda, se vuelve a mostrar todo
-        mostrarTorneos();
-        generarTarjetas();
-        return;
-    }
-
-    let resultados = [];
-
-    for (let i = 0; i < torneos.length; i++) {
-
-        let torneoR = torneos[i];
-        let nombreCoincide = torneoR.nombre.toLowerCase().includes(texto);
-        let categoriaCoincide = torneoR.categoria.toLowerCase().includes(texto);
-
-        if (nombreCoincide || categoriaCoincide) {
-            resultados.push(torneoR);
-        }
-
-    }
-
-    mostrarTorneos(resultados);
-    generarTarjetas(resultados);
-
-}
 /**
  * Actividad 4. Registrar y validar un torneo (30 puntos)
  * 12. Crear la función registrarTorneo() sin parámetros.
@@ -186,6 +161,7 @@ function mostrarTorneos() {
     for (let i = 0; i < torneos.length; i++) {
 
         let torneoR = torneos[i];
+        let indiceReal = torneos.indexOf(torneoR);
 
         contenidoTabla +=
             "<tr>" +
@@ -196,7 +172,8 @@ function mostrarTorneos() {
             "<td>" + torneoR.email + "</td>" +
             "<td>" + torneoR.Recaudacion + "</td>" +
             "<td><button onclick=\"editar('" + torneoR.nombre + "')\">Editar</button>" +
-            "<button onclick=\"eliminarTorneo()\">eliminar</button></td>"
+            "<button onclick=\"eliminarTorneo()\">eliminar</button>" +
+            "<button onclick=\"generarTarjetas('" + indiceReal + "')\">ver</button></td>"
         "</tr>";
 
     }
@@ -251,11 +228,72 @@ function eliminarTorneo(indice) {
     torneos.splice(indice, 1);
     mostrarTorneos();
 }
-function editar(nombre){
-    let existe=buscarTorneo(nombre)
+function editar(nombre) {
+    let existe = buscarTorneo(nombre)
     mostrarTextoEnCaja("txtNombreTorneo", existe.nombre);
     mostrarTextoEnCaja("txtCategoria", existe.categoria);
     mostrarTextoEnCaja("txtPartisipartes", existe.partisipartes);
-    mostrarTextoEnCaja("txtValoInscripcion",existe.inscripcion);
+    mostrarTextoEnCaja("txtValoInscripcion", existe.inscripcion);
     mostrarTextoEnCaja("txtEmail", existe.email);
 }
+
+
+function buscarTorneos() {
+    let valorNombre = recuperaraTexto("txtNombreTorneo");
+    let existe = buscarTorneo(valorNombre)
+    if (existe == null) {
+        alert("No exixte el torneo")
+    } else {
+        let contenidoTabla = "<table>";
+        let cmpTabla = document.getElementById("conTabla");
+        let indiceReal = torneos.indexOf(existe);
+
+        contenidoTabla +=
+            "<tr>" +
+            "<td>" + existe.nombre + "</td>" +
+            "<td>" + existe.categoria + "</td>" +
+            "<td>" + existe.partisipartes + "</td>" +
+            "<td>" + existe.inscripcion + "</td>" +
+            "<td>" + existe.email + "</td>" +
+            "<td>" + existe.Recaudacion + "</td>" +
+            "<td><button onclick=\"editar('" + existe.nombre + "')\">Editar</button>" +
+            "<button onclick=\"eliminarTorneo()\">eliminar</button>" +
+            "<button onclick=\"generarTarjetas('" + indiceReal + "')\">ver</button></td>"
+        "</tr>";
+        contenidoTabla += "</table>";
+
+        cmpTabla.innerHTML = contenidoTabla;
+    }
+
+
+}
+
+function verTorneo(indice) {
+
+    let torneoR = torneos[indice];
+    if (!torneoR) return;
+
+    let detalle =
+        "<h3>" + torneoR.nombre + "</h3>" +
+        "<p><strong>Categoría:</strong> " + torneoR.categoria + "</p>" +
+        "<p><strong>Participantes:</strong> " + torneoR.partisipartes + "</p>" +
+        "<p><strong>Valor de inscripción:</strong> $" + torneoR.inscripcion + "</p>" +
+        "<p><strong>Email del organizador:</strong> " + torneoR.email + "</p>" +
+        "<p><strong>Recaudación estimada:</strong> $" + torneoR.Recaudacion + "</p>";
+
+    document.getElementById("modalContenido").innerHTML = detalle;
+    document.getElementById("modalTorneo").classList.add("activo");
+
+}
+
+/**
+ * Cierra la ventana modal.
+ */
+function cerrarModal() {
+    document.getElementById("modalTorneo").classList.remove("activo");
+}
+
+/**
+ * Actividad 6. Limpiar el formulario (5 puntos)
+ * 30. Crear la función limpiarFormulario().
+ */
