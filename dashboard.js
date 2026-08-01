@@ -11,7 +11,65 @@
 
 let torneos = [];
 
+//Tarjetas Dimanicas
+function generarTarjetas(listaTorneos) {
 
+    let lista = listaTorneos || torneos;
+    let contenidoTarjetas = "";
+
+    for (let i = 0; i < lista.length; i++) {
+
+        let torneoR = lista[i];
+
+        contenidoTarjetas +=
+            "<div class='tarjeta-torneo'>" +
+            "<span class='tarjeta-categoria'>" + torneoR.categoria + "</span>" +
+            "<h3 class='tarjeta-nombre'>" + torneoR.nombre + "</h3>" +
+            "<p class='tarjeta-dato'>Participantes: <strong>" + torneoR.partisipartes + "</strong></p>" +
+            "<p class='tarjeta-dato'>Inscripción: <strong>$" + torneoR.inscripcion + "</strong></p>" +
+            "<p class='tarjeta-recaudacion'>Recaudación: $" + torneoR.Recaudacion + "</p>" +
+            "</div>";
+
+    }
+
+    if (lista.length === 0) {
+        contenidoTarjetas = "<p class='tarjetas-vacio'>No hay torneos para mostrar en tarjetas.</p>";
+    }
+
+    document.getElementById("contenedorTarjetas").innerHTML = contenidoTarjetas;
+
+}
+
+//Buscar Torneo
+function buscarTorneos() {
+
+    let texto = document.getElementById("cajaBusqueda").value.trim().toLowerCase();
+
+    if (texto === "") {
+        // Al vaciar la búsqueda, se vuelve a mostrar todo
+        mostrarTorneos();
+        generarTarjetas();
+        return;
+    }
+
+    let resultados = [];
+
+    for (let i = 0; i < torneos.length; i++) {
+
+        let torneoR = torneos[i];
+        let nombreCoincide = torneoR.nombre.toLowerCase().includes(texto);
+        let categoriaCoincide = torneoR.categoria.toLowerCase().includes(texto);
+
+        if (nombreCoincide || categoriaCoincide) {
+            resultados.push(torneoR);
+        }
+
+    }
+
+    mostrarTorneos(resultados);
+    generarTarjetas(resultados);
+
+}
 /**
  * Actividad 4. Registrar y validar un torneo (30 puntos)
  * 12. Crear la función registrarTorneo() sin parámetros.
@@ -19,8 +77,8 @@ let torneos = [];
 function registrarTorneo() {
 
     // 13. Obtener los valores de todos los campos con document.getElementById()
-    let valorNombre = recuperaraTexto("txtNombreTorneo").trim();
-    let valorCategoria = recuperaraTexto("txtCategoria").trim();
+    let valorNombre = recuperaraTexto("txtNombreTorneo");
+    let valorCategoria = recuperaraTexto("txtCategoria");
     let valorPartisipartes = recuperarInt("txtPartisipartes");
     let valorInscripcion = recuperarInt("txtValoInscripcion");
     let ValorEmail = recuperaraTexto("txtEmail").trim();
@@ -95,12 +153,13 @@ function registrarTorneo() {
         limpiarFormulario();
 
     } else {
-        nuevoTorneo.nombre = valorNombre;
-        nuevoTorneo.categoria = valorCategoria;
-        nuevoTorneo.partisipartes = valorPartisipartes;
-        nuevoTorneo.inscripcion = valorInscripcion;
-        nuevoTorneo.email = ValorEmail;
-        nuevoTorneo.Recaudacion = recaudacionEstimada;
+        let nuevoTorneo = {};
+        existe.nombre = valorNombre;
+        existe.categoria = valorCategoria;
+        existe.partisipartes = valorPartisipartes;
+        existe.inscripcion = valorInscripcion;
+        existe.email = ValorEmail;
+        existe.Recaudacion = recaudacionEstimada;
         mostrarTorneos();
         limpiarFormulario();
     }
@@ -136,7 +195,7 @@ function mostrarTorneos() {
             "<td>" + torneoR.inscripcion + "</td>" +
             "<td>" + torneoR.email + "</td>" +
             "<td>" + torneoR.Recaudacion + "</td>" +
-            "<td><button onclick=\"registrarTorneo()\">Editar</button>" +
+            "<td><button onclick=\"editar('" + torneoR.nombre + "')\">Editar</button>" +
             "<button onclick=\"eliminarTorneo()\">eliminar</button></td>"
         "</tr>";
 
@@ -191,4 +250,12 @@ function buscarTorneo(nombre) {
 function eliminarTorneo(indice) {
     torneos.splice(indice, 1);
     mostrarTorneos();
+}
+function editar(nombre){
+    let existe=buscarTorneo(nombre)
+    mostrarTextoEnCaja("txtNombreTorneo", existe.nombre);
+    mostrarTextoEnCaja("txtCategoria", existe.categoria);
+    mostrarTextoEnCaja("txtPartisipartes", existe.partisipartes);
+    mostrarTextoEnCaja("txtValoInscripcion",existe.inscripcion);
+    mostrarTextoEnCaja("txtEmail", existe.email);
 }
