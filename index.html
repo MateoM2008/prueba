@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Torneos Gamer</title>
+    <script src="dashboard.js"></script>
+    <script src="utilitarios.js"></script>
+    <link rel="stylesheet" href="deshboar.css">
+</head>
+
+<body>
+    <!-- Encabezado Principal -->
+    <header>
+        <!-- Actividad 1. Crear el título "Dashboard de Torneos Gamer" -->
+        <h1>Dashboard de Torneos Gamer</h1>
+    </header>
+    <!-- Contenido Principal -->
+
+    <main>
+        <!-- Actividad 1. Formulario de Registro (15 puntos) -->
+        <input type="text " id="txtNombreTorneo" placeholder="Nombre">
+        <input type="text " id="txtCategoria" placeholder="Categoria" list="Categoria">
+        <input type="text " id="txtPartisipartes" placeholder="Partisipastes">
+        <input type="text " id="txtValoInscripcion" placeholder="valor Inscripcion">
+        <input type="text " id="txtEmail" placeholder="Email">
+        <datalist id="Categoria">
+            <option value="Lucha">
+            <option value="Estrategia">
+            <option value="Arcade">
+            <option value="Deportes">
+            <option value="Aventura"></option>
+        </datalist>
+        <p>
+            <button onclick="registrarTorneo();">Registrar torneo</button>
+        </p>
+        <!-- Actividad 2. Crear la tabla (10 puntos) -->
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Categoria</th>
+                <th>Partisipastes</th>
+                <th>Valor inscripcion</th>
+                <th>Email</th>
+                <th>Recuadacion estimada</th>
+            </tr>
+            <tbody id="conTabla">
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <!-- Enlace al archivo de JavaScript de la evaluación -->
+</body>
+
+</html>
